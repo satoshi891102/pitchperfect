@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -19,6 +20,17 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
+  const [ctaEmail, setCtaEmail] = useState('');
+  const [ctaSubmitted, setCtaSubmitted] = useState(false);
+
+  const handleCta = () => {
+    if (!ctaEmail.includes('@')) return;
+    const existing = JSON.parse(localStorage.getItem('pp_waitlist') || '[]');
+    existing.push({ email: ctaEmail, date: new Date().toISOString(), source: 'landing' });
+    localStorage.setItem('pp_waitlist', JSON.stringify(existing));
+    setCtaSubmitted(true);
+  };
+
   return (
     <div className="pt-14">
       {/* Hero */}
@@ -145,6 +157,36 @@ export default function LandingPage() {
               </Link>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="border-t border-zinc-800/50 bg-zinc-900/30 px-6 py-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <motion.div {...fade}>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Ready to pitch with confidence?</h2>
+            <p className="mt-4 text-zinc-400">Join 500+ founders already building investor-ready pitch decks.</p>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              {ctaSubmitted ? (
+                <p className="text-cyan-400 font-semibold">You are on the list. We will be in touch.</p>
+              ) : (
+                <>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={ctaEmail}
+                    onChange={(e) => setCtaEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCta()}
+                    className="w-full max-w-xs rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-cyan-500 sm:w-auto"
+                  />
+                  <button onClick={handleCta} className="rounded-xl bg-cyan-500 px-8 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400">
+                    Get Early Access
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="mt-4 text-xs text-zinc-600">Free forever. No credit card required.</p>
+          </motion.div>
         </div>
       </section>
 
