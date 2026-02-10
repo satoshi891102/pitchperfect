@@ -47,7 +47,10 @@ export default function DeckPage() {
   ];
 
   const growthRate = getGrowthRate(deck.step1.stage);
-  const baseRevenue = parseFloat(deck.step5.revenue) || 0;
+  const rawRevenue = parseFloat(deck.step5.revenue) || 0;
+  const users = parseFloat(deck.step5.users) || 0;
+  // If no revenue but has users, estimate from users * $10/mo
+  const baseRevenue = rawRevenue > 0 ? rawRevenue : (users > 0 ? users * 120 : 10000);
   const projections = Array.from({ length: 5 }, (_, i) => ({
     year: `Year ${i + 1}`,
     revenue: i === 0 ? baseRevenue : Math.round(baseRevenue * Math.pow(growthRate, i)),

@@ -22,7 +22,7 @@ export default function LandingPage() {
   return (
     <div className="pt-14">
       {/* Hero */}
-      <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-6 text-center">
+      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(34,211,238,0.08)_0%,_transparent_70%)]" />
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-cyan-400">For Founders</p>

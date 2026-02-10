@@ -38,7 +38,9 @@ export default function ExportPage() {
   ];
 
   const growthRate = getGrowthRate(deck.step1.stage);
-  const baseRevenue = parseFloat(deck.step5.revenue) || 0;
+  const rawRevenue = parseFloat(deck.step5.revenue) || 0;
+  const usersExport = parseFloat(deck.step5.users) || 0;
+  const baseRevenue = rawRevenue > 0 ? rawRevenue : (usersExport > 0 ? usersExport * 120 : 10000);
   const projections = Array.from({ length: 5 }, (_, i) => ({
     year: `Y${i + 1}`,
     revenue: i === 0 ? baseRevenue : Math.round(baseRevenue * Math.pow(growthRate, i)),
