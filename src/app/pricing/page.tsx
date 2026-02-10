@@ -46,6 +46,16 @@ const faqs = [
 export default function PricingPage() {
   const [showModal, setShowModal] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleWaitlist = () => {
+    if (!email.includes('@')) return;
+    const existing = JSON.parse(localStorage.getItem('pp_waitlist') || '[]');
+    existing.push({ email, date: new Date().toISOString() });
+    localStorage.setItem('pp_waitlist', JSON.stringify(existing));
+    setSubmitted(true);
+  };
 
   return (
     <div className="min-h-screen px-6 pt-28 pb-20">
@@ -149,18 +159,43 @@ export default function PricingPage() {
               className="mx-4 w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 p-8 text-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold">Coming Soon</h3>
-              <p className="mt-3 text-sm text-zinc-400">
-                Paid plans are launching soon. Start with the free plan today and you will be the first to know when Pro is available.
-              </p>
-              <div className="mt-6 flex gap-3">
-                <Link href="/create" className="flex-1 rounded-xl bg-cyan-500 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400">
-                  Start Free
-                </Link>
-                <button onClick={() => setShowModal(false)} className="flex-1 rounded-xl border border-zinc-700 py-2.5 text-sm text-zinc-300 transition hover:border-zinc-500">
-                  Close
-                </button>
-              </div>
+              {submitted ? (
+                <>
+                  <div className="mb-4 text-4xl">✓</div>
+                  <h3 className="text-xl font-bold">You are on the list</h3>
+                  <p className="mt-3 text-sm text-zinc-400">
+                    We will notify you as soon as Pro launches. Meanwhile, start building decks for free.
+                  </p>
+                  <div className="mt-6">
+                    <Link href="/create" className="inline-block rounded-xl bg-cyan-500 px-8 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400">
+                      Start Free
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-xl font-bold">Get Early Access to Pro</h3>
+                  <p className="mt-3 text-sm text-zinc-400">
+                    Join the waitlist and be the first to unlock unlimited decks, custom branding, and AI-powered suggestions.
+                  </p>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleWaitlist()}
+                    className="mt-6 w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-cyan-500"
+                  />
+                  <div className="mt-4 flex gap-3">
+                    <button onClick={handleWaitlist} className="flex-1 rounded-xl bg-cyan-500 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400">
+                      Join Waitlist
+                    </button>
+                    <button onClick={() => setShowModal(false)} className="flex-1 rounded-xl border border-zinc-700 py-2.5 text-sm text-zinc-300 transition hover:border-zinc-500">
+                      Maybe Later
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}
