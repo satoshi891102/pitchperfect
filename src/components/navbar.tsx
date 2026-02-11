@@ -27,6 +27,9 @@ export function Navbar() {
           <Link href="/examples" className={`transition hover:text-zinc-100 ${pathname === '/examples' ? 'text-zinc-100' : ''}`}>
             Examples
           </Link>
+          <Link href="/blog" className={`transition hover:text-zinc-100 ${pathname.startsWith('/blog') ? 'text-zinc-100' : ''}`}>
+            Blog
+          </Link>
           <Link href="/pricing" className={`transition hover:text-zinc-100 ${pathname === '/pricing' ? 'text-zinc-100' : ''}`}>
             Pricing
           </Link>
