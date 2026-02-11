@@ -8,9 +8,11 @@ const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }
 
 const features = [
   { title: 'Smart Input Wizard', desc: 'Answer 5 simple steps about your business. We handle the rest.', icon: '1' },
-  { title: 'Instant Deck Generation', desc: 'Get a 10+ slide pitch deck with financials, market sizing, and competitive positioning.', icon: '2' },
+  { title: 'Instant Deck Generation', desc: 'Get an 11-slide pitch deck with financials, market sizing, and competitive positioning.', icon: '2' },
   { title: 'Charts & Projections', desc: 'TAM/SAM/SOM analysis, 5-year revenue projections, and competition matrices — auto-generated.', icon: '3' },
-  { title: 'Export & Share', desc: 'Download as PDF or share a live link with investors. One click.', icon: '4' },
+  { title: 'Pitch Score', desc: 'Get instant feedback across 6 dimensions. Know exactly what to improve before you pitch.', icon: '4' },
+  { title: 'Presentation Mode', desc: 'Full-screen slideshow with keyboard navigation. Present directly from your browser.', icon: '5' },
+  { title: 'Export & Share', desc: 'Download as PDF or share a live link with investors. One click.', icon: '6' },
 ];
 
 const testimonials = [
@@ -68,7 +70,7 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">How it works</h2>
           <p className="mt-3 text-zinc-400">From idea to investor-ready deck in four steps</p>
         </motion.div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -111,6 +113,90 @@ export default function LandingPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Templates Preview */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <motion.div {...fade} className="mb-16 text-center">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Start from a template</h2>
+          <p className="mt-3 text-zinc-400">Industry-specific decks ready to customize</p>
+        </motion.div>
+        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+          {[
+            { icon: '☁️', name: 'B2B SaaS', color: '#22d3ee' },
+            { icon: '💳', name: 'Fintech', color: '#8b5cf6' },
+            { icon: '🧠', name: 'AI / ML', color: '#f97316' },
+            { icon: '🏪', name: 'Marketplace', color: '#10b981' },
+            { icon: '🌍', name: 'Climate', color: '#22c55e' },
+            { icon: '📚', name: 'EdTech', color: '#eab308' },
+          ].map((t, i) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <Link
+                href="/templates"
+                className="flex flex-col items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition hover:border-zinc-600"
+              >
+                <span className="text-3xl">{t.icon}</span>
+                <span className="text-sm font-medium text-zinc-300">{t.name}</span>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <Link href="/templates" className="text-sm font-medium text-cyan-400 transition hover:text-cyan-300">
+            View all templates →
+          </Link>
+        </div>
+      </section>
+
+      {/* Pitch Score Preview */}
+      <section className="border-t border-zinc-800/50 bg-zinc-900/30 px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col items-center gap-10 md:flex-row">
+            <motion.div {...fade} className="flex-1">
+              <p className="mb-2 text-sm font-medium uppercase tracking-widest text-cyan-400">NEW</p>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Pitch Score</h2>
+              <p className="mt-4 text-zinc-400">Get instant feedback on your deck. Our scoring engine analyzes 6 key dimensions — from problem clarity to financial readiness — and gives you specific tips to improve.</p>
+              <ul className="mt-6 space-y-2 text-sm text-zinc-300">
+                {['Company identity & positioning', 'Problem statement strength', 'Solution differentiation', 'Market opportunity sizing', 'Business model clarity', 'Traction & team signals'].map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="text-cyan-400">—</span> {item}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/create" className="mt-8 inline-block rounded-xl bg-cyan-500 px-8 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400">
+                Create & Score Your Deck
+              </Link>
+            </motion.div>
+            <motion.div {...fade} className="flex items-center gap-6">
+              <div className="relative h-40 w-40">
+                <svg width={160} height={160} className="-rotate-90">
+                  <circle cx={80} cy={80} r={68} fill="none" stroke="#27272a" strokeWidth={8} />
+                  <circle cx={80} cy={80} r={68} fill="none" stroke="#22d3ee" strokeWidth={8} strokeDasharray={427} strokeDashoffset={85} strokeLinecap="round" />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-4xl font-bold text-cyan-400">80</span>
+                  <span className="text-xs text-zinc-500">Score</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                {['Clarity', 'Market', 'Finance', 'Story'].map((label, i) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <div className="h-1.5 w-16 overflow-hidden rounded-full bg-zinc-800">
+                      <div className="h-full rounded-full bg-cyan-500" style={{ width: `${[85, 70, 60, 90][i]}%` }} />
+                    </div>
+                    <span className="text-xs text-zinc-500">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
