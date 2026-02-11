@@ -309,12 +309,26 @@ export default function DeckPage() {
             <h1 className="text-2xl font-bold">{deck.step1.companyName || 'Pitch Deck'}</h1>
             <p className="text-sm text-zinc-500">Slide {slide + 1} of {slides.length}</p>
           </div>
-          <Link
-            href={`/deck/${id}/export`}
-            className="rounded-xl bg-cyan-500 px-6 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400"
-          >
-            Export
-          </Link>
+          <div className="flex gap-2">
+            <Link
+              href={`/deck/${id}/score`}
+              className="rounded-xl border border-zinc-700 px-5 py-2 text-sm font-medium text-zinc-300 transition hover:border-zinc-500 hover:text-zinc-100"
+            >
+              Pitch Score
+            </Link>
+            <Link
+              href={`/deck/${id}/present`}
+              className="rounded-xl border border-violet-500/50 bg-violet-500/10 px-5 py-2 text-sm font-medium text-violet-300 transition hover:bg-violet-500/20"
+            >
+              Present
+            </Link>
+            <Link
+              href={`/deck/${id}/export`}
+              className="rounded-xl bg-cyan-500 px-6 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-cyan-400"
+            >
+              Export
+            </Link>
+          </div>
         </div>
 
         {/* Slide Navigation */}

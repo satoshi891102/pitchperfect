@@ -6,7 +6,9 @@ import { motion } from 'framer-motion';
 
 export function Navbar() {
   const pathname = usePathname();
-  const isLanding = pathname === '/';
+
+  // Hide navbar in presentation mode
+  if (pathname.endsWith('/present')) return null;
 
   return (
     <motion.nav
@@ -19,10 +21,13 @@ export function Navbar() {
           <span className="gradient-text">PitchPerfect</span>
         </Link>
         <div className="flex items-center gap-6 text-sm text-zinc-400">
-          <Link href="/pricing" className="transition hover:text-zinc-100">
+          <Link href="/templates" className={`transition hover:text-zinc-100 ${pathname === '/templates' ? 'text-zinc-100' : ''}`}>
+            Templates
+          </Link>
+          <Link href="/pricing" className={`transition hover:text-zinc-100 ${pathname === '/pricing' ? 'text-zinc-100' : ''}`}>
             Pricing
           </Link>
-          <Link href="/dashboard" className="transition hover:text-zinc-100">
+          <Link href="/dashboard" className={`transition hover:text-zinc-100 ${pathname === '/dashboard' ? 'text-zinc-100' : ''}`}>
             Dashboard
           </Link>
           <Link
