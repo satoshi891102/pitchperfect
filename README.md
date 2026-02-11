@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PitchPerfect — AI Pitch Deck Generator
+
+Turn your startup idea into an investor-ready pitch deck in minutes. Free for founders.
+
+**Live:** [pitchperfect-omega.vercel.app](https://pitchperfect-omega.vercel.app)
+
+## Features
+
+- **Smart Input Wizard** — 5-step guided form captures everything about your business
+- **11-Slide Deck Generation** — Cover, Problem, Solution, Market (TAM/SAM/SOM), Business Model, Traction, Competition, Go-to-Market, Financials, Team, The Ask
+- **Auto-Generated Charts** — TAM/SAM/SOM donut chart, 5-year revenue projections, competition scatter plot, use-of-funds breakdown
+- **Pitch Score** — 6-dimension analysis: Company Identity, Problem Statement, Solution & Moat, Market Opportunity, Business Model, Traction & Team. Grade A-F with improvement tips.
+- **Presentation Mode** — Full-screen slideshow with keyboard navigation (arrow keys, space, ESC). Auto-hiding controls, progress bar, fullscreen toggle (F key).
+- **Templates Gallery** — 6 industry-specific starter decks: B2B SaaS, Fintech Payments, AI/ML, Marketplace, Climate Tech, EdTech. Each with realistic data and compelling narratives.
+- **Export** — PDF export via browser print, share links
+- **Email Waitlist** — Capture leads on landing page and pricing modal
+- **Dashboard** — View all decks with mini score badges, average score, quick actions
+- **Local Storage** — All data stored in browser, zero server-side storage
+
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing page with features, templates preview, pitch score demo, pricing, testimonials |
+| `/create` | 5-step wizard with progress bar and auto-save drafts |
+| `/templates` | 6 industry templates with expandable details and category filtering |
+| `/deck/[id]` | Interactive slide viewer with tab navigation |
+| `/deck/[id]/present` | Full-screen presentation mode |
+| `/deck/[id]/score` | Pitch scoring with 6-category breakdown, tips, and investor readiness checklist |
+| `/deck/[id]/export` | All slides rendered for PDF export |
+| `/pricing` | Free/Pro/Enterprise tiers with FAQ accordion |
+| `/dashboard` | All decks with scores, quick actions |
+
+## Tech Stack
+
+- **Next.js 14** + TypeScript
+- **Tailwind CSS** — Dark theme, responsive
+- **Framer Motion** — Animations, transitions, presentation mode
+- **Recharts** — Charts (PieChart, AreaChart, ScatterChart)
+- **Local Storage** — Zero backend, fully client-side
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx vercel --prod
+```
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
