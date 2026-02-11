@@ -311,10 +311,16 @@ export default function DeckPage() {
           </div>
           <div className="flex gap-2">
             <Link
-              href={`/deck/${id}/score`}
+              href={`/create?edit=${id}`}
               className="rounded-xl border border-zinc-700 px-5 py-2 text-sm font-medium text-zinc-300 transition hover:border-zinc-500 hover:text-zinc-100"
             >
-              Pitch Score
+              Edit
+            </Link>
+            <Link
+              href={`/deck/${id}/score`}
+              className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-400 transition hover:bg-amber-500/20"
+            >
+              Score
             </Link>
             <Link
               href={`/deck/${id}/present`}

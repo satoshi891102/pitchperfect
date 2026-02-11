@@ -125,8 +125,14 @@ export default function DashboardPage() {
                   </Link>
                   <div className="ml-4 flex items-center gap-2">
                     <Link
-                      href={`/deck/${deck.id}/score`}
+                      href={`/create?edit=${deck.id}`}
                       className="rounded-lg border border-zinc-800 px-3 py-1.5 text-xs text-zinc-400 opacity-0 transition hover:border-zinc-600 group-hover:opacity-100"
+                    >
+                      Edit
+                    </Link>
+                    <Link
+                      href={`/deck/${deck.id}/score`}
+                      className="rounded-lg border border-zinc-800 px-3 py-1.5 text-xs text-amber-400 opacity-0 transition hover:border-amber-500/50 group-hover:opacity-100"
                     >
                       Score
                     </Link>

@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DeckData, INDUSTRIES, STAGES, REVENUE_MODELS } from '@/lib/types';
-import { saveDeck, saveDraft, getDraft, clearDraft } from '@/lib/storage';
+import { saveDeck, saveDraft, getDraft, clearDraft, getDeck } from '@/lib/storage';
 
 const emptyDeck: Omit<DeckData, 'id' | 'createdAt' | 'updatedAt'> = {
   step1: { companyName: '', oneLiner: '', industry: '', stage: '' },
@@ -16,15 +16,37 @@ const emptyDeck: Omit<DeckData, 'id' | 'createdAt' | 'updatedAt'> = {
 
 const steps = ['Business Basics', 'Problem & Solution', 'Market', 'Business Model', 'Team & Traction'];
 
-export default function CreatePage() {
+export default function CreatePageWrapper() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center pt-14 text-zinc-500">Loading...</div>}>
+      <CreatePage />
+    </Suspense>
+  );
+}
+
+function CreatePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit');
   const [step, setStep] = useState(0);
   const [data, setData] = useState(emptyDeck);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    // If editing an existing deck, load it
+    if (editId) {
+      const existing = getDeck(editId);
+      if (existing) {
+        const { id, createdAt, updatedAt, ...rest } = existing;
+        setData(rest as typeof emptyDeck);
+        setIsEditing(true);
+        return;
+      }
+    }
+    // Otherwise check for draft
     const draft = getDraft();
     if (draft && draft.step1) setData(draft as typeof emptyDeck);
-  }, []);
+  }, [editId]);
 
   useEffect(() => {
     saveDraft(data as Partial<DeckData>);
@@ -40,12 +62,13 @@ export default function CreatePage() {
   }
 
   function generate() {
-    const id = crypto.randomUUID();
+    const id = isEditing && editId ? editId : crypto.randomUUID();
+    const now = new Date().toISOString();
     const deck: DeckData = {
       ...data,
       id,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: isEditing ? (getDeck(id)?.createdAt || now) : now,
+      updatedAt: now,
     };
     saveDeck(deck);
     clearDraft();
